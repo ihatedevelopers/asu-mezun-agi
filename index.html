@@ -217,6 +217,24 @@ h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.02em;line-h
 .voice figcaption{margin-top:auto;display:flex;gap:12px;align-items:center;font-size:13px;color:var(--muted)}
 .voice figcaption b{color:var(--text);display:block}
 
+/* surveys */
+.sv-tabs{display:flex;gap:8px;margin-bottom:22px}
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sv{position:relative;border-radius:var(--radius);padding:22px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.sv.live{border-color:rgba(95,214,201,.35);background:linear-gradient(160deg,rgba(95,214,201,.08),var(--card) 60%)}
+.sv.ended{opacity:.75}
+.st{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:99px}
+.st.live{background:rgba(95,214,201,.14);color:var(--river)}
+.st.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--river);animation:pulse 1.6s infinite}
+.st.ended{background:rgba(255,255,255,.07);color:var(--muted)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(95,214,201,.6)}100%{box-shadow:0 0 0 9px rgba(95,214,201,0)}}
+.sv h3{font-size:21px;line-height:1.2}
+.sv p{color:var(--muted);font-size:14px}
+.sv .when{font-size:12px;color:var(--dim);margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.sv .btn{align-self:flex-start}
+@media (max-width:980px){.sv-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.sv-grid{grid-template-columns:1fr}}
+
 /* panel */
 .panel{border-radius:24px;background:#0f1326;border:1px solid var(--line2);overflow:hidden;box-shadow:0 50px 100px -50px rgba(0,0,0,.9)}
 .p-bar{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line);background:#121731;flex-wrap:wrap}
@@ -309,6 +327,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 46px;color:var(--dim);fon
     <a href="#bolumler">Bölümler</a>
     <a href="#mezunlar">Mezunlar</a>
     <a href="#kayit">Kayıt</a>
+    <a href="#anketler">Anketler</a>
     <a href="#duyurular">Duyurular</a>
     <a href="#panel">Fakülte Paneli</a>
   </div>
@@ -492,6 +511,18 @@ footer{border-top:1px solid var(--line);padding:36px 0 46px;color:var(--dim);fon
         <div style="margin-top:20px"><button class="btn btn-ghost btn-sm" id="again">Yeni kayıt (demo)</button></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SURVEYS -->
+<section class="block" id="anketler" style="padding-top:10px">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div><div class="label">Anketler</div><h2 class="h2">Mezun anketleri</h2>
+        <p class="lead">Devam eden anketlere katılabilir, sona erenleri görebilirsin. Anketler Google Forms üzerinden açılır.</p></div>
+    </div>
+    <div class="sv-tabs reveal" id="svTabs"></div>
+    <div class="sv-grid" id="svGrid"></div>
   </div>
 </section>
 
@@ -813,6 +844,31 @@ const VOICES=[
   {q:"Mutfakta hız sonradan gelir; önce temizlik ve düzen. İlk şefim bana bunu öğretti.",n:"Zeynep Arslan",d:"gas",m:"Sous chef · 2020"},
 ];
 document.getElementById('voices').innerHTML=VOICES.map(v=>`<figure class="voice reveal in"><blockquote>“${v.q}”</blockquote><figcaption><span class="avatar" style="width:40px;height:40px;border-radius:12px;font-size:15px;background:${DEPS[v.d].hex}">${initials(v.n)}</span><span><b>${v.n}</b>${DEPS[v.d].n} · ${v.m}</span></figcaption></figure>`).join('');
+
+/* Anketler — yeni anket eklemek için buraya satır ekle, linke Google Form adresini yapıştır.
+   durum: 'devam' ya da 'bitti' */
+const SURVEYS=[
+  {baslik:'2026 Mezun İzleme Anketi',aciklama:'Çalışma durumu, sektör ve fakülteden memnuniyet üzerine kısa anket.',durum:'devam',tarih:'1 Ekim – 30 Kasım 2026',link:''},
+  {baslik:'Danışma Kurulu: Mezun Görüşleri',aciklama:'Fakültenin gelişimine yönelik görüş ve önerileriniz.',durum:'devam',tarih:'17 – 25 Ekim 2026',link:''},
+  {baslik:'Staj ve İşe Yerleşme Anketi',aciklama:'Staj deneyimlerinin işe girişe etkisi.',durum:'bitti',tarih:'Mart – Nisan 2026',link:''},
+  {baslik:'2025 Mezun İzleme Anketi',aciklama:'Geçen yılın mezun izleme sonuçları.',durum:'bitti',tarih:'Ekim – Aralık 2025',link:''},
+];
+let svF='devam';
+const svTabs=document.getElementById('svTabs');
+[['devam','Devam eden'],['bitti','Sona eren'],['hepsi','Tümü']].forEach(([k,l])=>{const b=document.createElement('button');b.className='chip'+(k===svF?' on':'');b.dataset.k=k;
+  b.textContent=l+(k==='hepsi'?'':' ('+SURVEYS.filter(x=>x.durum===k).length+')');b.onclick=()=>{svF=k;[...svTabs.children].forEach(c=>c.classList.toggle('on',c===b));renderSv();};svTabs.appendChild(b);});
+function openSv(i){const x=SURVEYS[i];if(x.link)window.open(x.link,'_blank','noopener');else toast('Demo: burada ilgili Google Form açılır.');}
+function renderSv(){
+  const list=SURVEYS.map((x,i)=>({...x,i})).filter(x=>svF==='hepsi'||x.durum===svF);
+  document.getElementById('svGrid').innerHTML=list.length?list.map(x=>{const live=x.durum==='devam';return `
+    <article class="sv ${live?'live':'ended'}">
+      <span class="st ${live?'live':'ended'}">${live?'Devam ediyor':'Sona erdi'}</span>
+      <h3>${x.baslik}</h3><p>${x.aciklama}</p>
+      ${live?`<button class="btn btn-sun btn-sm" onclick="openSv(${x.i})">Ankete katıl →</button>`:`<button class="btn btn-ghost btn-sm" disabled style="cursor:default;opacity:.7">Katılım kapandı</button>`}
+      <div class="when">${x.tarih}</div>
+    </article>`}).join(''):'<div class="empty">Bu durumda anket yok.</div>';
+}
+renderSv();
 
 // panel
 const WB=[["Özel sektör · turizm işletmesi",38],["Kendi işi",14],["Kamu kurumu",12],["Özel sektör · diğer sektör",17],["Çalışmıyor",13],["Diğer",6]];
