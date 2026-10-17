@@ -419,8 +419,8 @@ footer{border-top:1px solid var(--line);padding:36px 0 46px;color:var(--dim);fon
       <article class="dep reveal" tabindex="0" data-dep="reh" style="color:var(--c-reh)">
         <img src="assets/rehberlik.jpg" alt="Tarihi bir alanda grubuna anlatım yapan rehber" loading="lazy">
         <div class="dep-in"><span class="dep-tag">Bölüm</span><h3 style="color:var(--text)">Turizm Rehberliği</h3>
-          <p>Kokartlı rehberler, dil ve bölge bilgisiyle listelenir. Acenteler ve fakülte, ihtiyaç duyduğu rehbere buradan ulaşır.</p>
-          <div class="dep-meta"><span><b>486</b> mezun</span><span><b>316</b> kokartlı</span></div></div>
+          <p>Profesyonel turist rehberleri, dil ve bölge bilgisiyle listelenir. Acenteler ve fakülte, ihtiyaç duyduğu rehbere buradan ulaşır.</p>
+          <div class="dep-meta"><span><b>486</b> mezun</span><span><b>316</b> profesyonel rehber</span></div></div>
       </article>
       <article class="dep reveal" tabindex="0" data-dep="isl" style="color:var(--c-isl)">
         <img src="assets/isletme.jpg" alt="Otel resepsiyonu" loading="lazy">
@@ -511,7 +511,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 46px;color:var(--dim);fon
           <div class="field"><label for="f-org">Kurum / İşletme adı</label><input id="f-org" placeholder="İsteğe bağlı"></div>
           <div class="field"><label for="f-city">Şehir</label><input id="f-city" placeholder="Örn. Aksaray"></div>
           <div class="dep-extra" data-dep="reh">
-            <label class="toggle"><div>Kokartlı rehberim<small>Profesyonel turist rehberi ruhsatım var</small></div><span class="sw"><input type="checkbox" id="f-kokart"><i></i></span></label>
+            <label class="toggle"><div>Profesyonel turist rehberiyim<small>Rehberlik çalışma kartım var</small></div><span class="sw"><input type="checkbox" id="f-rehber"><i></i></span></label>
             <div class="field" style="margin-top:14px"><span class="flabel">Rehberlik dillerin</span><div class="lang-pick" id="langPick"></div></div>
           </div>
           <div class="dep-extra" data-dep="isl">
@@ -695,17 +695,17 @@ const DEPS={reh:{n:'Turizm Rehberliği',c:'var(--c-reh)',hex:'#ffb36e'},isl:{n:'
 const WORK={kamu:'Kamu kurumu','ozel-turizm':'Özel sektör · turizm','ozel-diger':'Özel sektör · diğer',kendi:'Kendi işi',yok:'Çalışmıyor',diger:'Diğer'};
 const LANGS=["İngilizce","Almanca","Rusça","Fransızca","İspanyolca","İtalyanca","Japonca","Çince","Korece","Arapça"];
 const PEOPLE=[
-  {n:"Elif Kaya",d:"reh",y:2018,w:"kendi",job:"Serbest rehber",org:"",city:"Nevşehir",tags:["Kokartlı","İngilizce","Almanca"]},
+  {n:"Elif Kaya",d:"reh",y:2018,w:"kendi",job:"Serbest rehber",org:"",city:"Nevşehir",tags:["Profesyonel rehber","İngilizce","Almanca"]},
   {n:"Mert Demir",d:"isl",y:2019,w:"ozel-turizm",job:"Ön büro müdürü",org:"Sahil oteli",city:"Antalya",tags:["Otel"]},
   {n:"Zeynep Arslan",d:"gas",y:2020,w:"ozel-turizm",job:"Sous chef",org:"Restoran",city:"İstanbul",tags:["Sıcak mutfak"]},
-  {n:"Burak Yıldız",d:"reh",y:2017,w:"ozel-turizm",job:"Tur rehberi",org:"Seyahat acentesi",city:"Kapadokya",tags:["Kokartlı","Japonca"]},
+  {n:"Burak Yıldız",d:"reh",y:2017,w:"ozel-turizm",job:"Tur rehberi",org:"Seyahat acentesi",city:"Kapadokya",tags:["Profesyonel rehber","Japonca"]},
   {n:"Selin Aydın",d:"isl",y:2021,w:"kamu",job:"Turizm uzmanı",org:"İl Kültür ve Turizm Müdürlüğü",city:"Aksaray",tags:["Kamu"]},
   {n:"Can Öztürk",d:"gas",y:2016,w:"kendi",job:"İşletme sahibi",org:"Kendi restoranı",city:"Aksaray",tags:["Yöresel mutfak"]},
-  {n:"Ayşe Çelik",d:"reh",y:2022,w:"ozel-turizm",job:"Rehber",org:"Acente",city:"İstanbul",tags:["Kokartlı","Çince","İngilizce"]},
+  {n:"Ayşe Çelik",d:"reh",y:2022,w:"ozel-turizm",job:"Rehber",org:"Acente",city:"İstanbul",tags:["Profesyonel rehber","Çince","İngilizce"]},
   {n:"Emre Şahin",d:"isl",y:2019,w:"ozel-turizm",job:"Operasyon sorumlusu",org:"Tur operatörü",city:"İzmir",tags:["Acente"]},
   {n:"Deniz Koç",d:"gas",y:2021,w:"ozel-turizm",job:"Pasta şefi",org:"Otel mutfağı",city:"Muğla",tags:["Pastane"]},
   {n:"Gizem Tekin",d:"isl",y:2023,w:"ozel-diger",job:"Satış uzmanı",org:"Perakende",city:"Ankara",tags:["Diğer sektör"]},
-  {n:"Yusuf Erdem",d:"reh",y:2020,w:"kamu",job:"Müze görevlisi",org:"Aksaray Müzesi",city:"Aksaray",tags:["Kokartlı","Arapça"]},
+  {n:"Yusuf Erdem",d:"reh",y:2020,w:"kamu",job:"Müze görevlisi",org:"Aksaray Müzesi",city:"Aksaray",tags:["Profesyonel rehber","Arapça"]},
   {n:"İrem Polat",d:"gas",y:2024,w:"diger",job:"Yüksek lisans",org:"",city:"Konya",tags:["Akademi"]},
 ];
 
