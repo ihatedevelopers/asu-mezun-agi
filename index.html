@@ -42,6 +42,26 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn-ghost:hover{background:rgba(255,255,255,.14)}
 .btn-sm{padding:9px 16px;font-size:13px}
 
+/* mobil menü */
+.nav-right{display:flex;align-items:center;gap:10px}
+.burger{display:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line2);background:rgba(12,15,30,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;position:relative;z-index:61}
+.burger i{position:absolute;left:11px;right:11px;height:2px;border-radius:2px;background:var(--text);transition:transform .35s,opacity .25s,top .35s}
+.burger i:nth-child(1){top:14px}.burger i:nth-child(2){top:20px}.burger i:nth-child(3){top:26px}
+body.menu-open .burger i:nth-child(1){top:20px;transform:rotate(45deg)}
+body.menu-open .burger i:nth-child(2){opacity:0}
+body.menu-open .burger i:nth-child(3){top:20px;transform:rotate(-45deg)}
+.mmenu{position:fixed;inset:0;z-index:55;background:rgba(10,12,26,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;flex-direction:column;justify-content:center;padding:90px 28px 40px;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+body.menu-open .mmenu{opacity:1;visibility:visible}
+body.menu-open{overflow:hidden}
+body.menu-open .nav{z-index:60;background:transparent;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.mmenu a.ml{display:flex;align-items:baseline;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-family:var(--display);font-size:32px;line-height:1.1;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
+.mmenu a.ml small{font-family:var(--sans);font-size:12px;color:var(--sun);font-weight:800;letter-spacing:.1em;width:22px}
+body.menu-open .mmenu a.ml{opacity:1;transform:none}
+.mmenu .btn{margin-top:28px;width:100%}
+.mmenu .mfoot{margin-top:20px;font-size:12px;color:var(--dim)}
+@media (max-width:980px){.burger{display:block}}
+@media (min-width:981px){.mmenu{display:none}}
+
 /* HERO */
 .hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#141020 center/cover no-repeat}
 #gl{position:absolute;inset:0;width:100%;height:100%}
@@ -331,8 +351,22 @@ footer{border-top:1px solid var(--line);padding:36px 0 46px;color:var(--dim);fon
     <a href="#duyurular">Duyurular</a>
     <a href="#panel">Fakülte Paneli</a>
   </div>
-  <a href="#kayit" class="btn btn-sun btn-sm">Kayıt Ol</a>
+  <div class="nav-right">
+    <a href="#kayit" class="btn btn-sun btn-sm">Kayıt Ol</a>
+    <button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mmenu"><i></i><i></i><i></i></button>
+  </div>
 </nav>
+<div class="mmenu" id="mmenu" aria-hidden="true">
+  <a class="ml" href="#bolumler"><small>01</small>Bölümler</a>
+  <a class="ml" href="#mezunlar"><small>02</small>Mezunlar</a>
+  <a class="ml" href="#kayit"><small>03</small>Mezun Kaydı</a>
+  <a class="ml" href="#anketler"><small>04</small>Anketler</a>
+  <a class="ml" href="#duyurular"><small>05</small>Duyurular</a>
+  <a class="ml" href="#panel"><small>06</small>Fakülte Paneli</a>
+  <a class="ml" href="#iletisim"><small>07</small>İletişim</a>
+  <a href="#kayit" class="btn btn-sun">Kayıt Ol</a>
+  <div class="mfoot">Aksaray Üniversitesi Turizm Fakültesi</div>
+</div>
 
 <!-- HERO -->
 <header class="hero" id="top">
@@ -771,6 +805,13 @@ const initials=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2);
 /* ===== Sayfa ===== */
 const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>innerHeight*.8),{passive:true});
+// mobil menü
+const burger=document.getElementById('burger'),mmenu=document.getElementById('mmenu');
+function setMenu(on){document.body.classList.toggle('menu-open',on);burger.setAttribute('aria-expanded',on);burger.setAttribute('aria-label',on?'Menüyü kapat':'Menüyü aç');mmenu.setAttribute('aria-hidden',!on);
+  mmenu.querySelectorAll('a.ml').forEach((a,i)=>a.style.transitionDelay=on?(.05+i*.04)+'s':'0s');}
+burger.onclick=()=>setMenu(!document.body.classList.contains('menu-open'));
+mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);
