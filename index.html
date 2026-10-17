@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ASÜ Turizm Mezun Ağı</title>
+<meta name="description" content="Aksaray Üniversitesi Turizm Fakültesi dijital mezun platformu — tasarım önizlemesi">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0c0f1e; --night2:#12162b; --card:#181d36; --card2:#1e2442;
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --text:#f5eee6; --muted:#aaa4b9; --dim:#7d7891;
+  --stone:#e8d2b1; --sun:#ffa65e; --ember:#ff7759; --river:#5fd6c9; --snow:#f3f0f7;
+  --radius:18px; --maxw:1180px;
+  --display:"Fraunces",Georgia,serif; --sans:"Manrope",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--night);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,svg{display:block}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+::selection{background:var(--sun);color:#1a1020}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,40px);transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(12,15,30,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.01em;font-size:15px;white-space:nowrap}
+.brand svg{width:30px;height:30px}
+.brand b{font-family:var(--display);font-weight:600;font-size:18px;color:var(--sun);font-style:italic}
+.nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
+.nav-links a{position:relative;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;border-radius:999px;padding:12px 22px;font-weight:700;font-size:14px;transition:transform .2s,box-shadow .3s,background .3s;white-space:nowrap}
+.btn-sun{background:linear-gradient(135deg,#ffb36e,#ff7759);color:#24110b;box-shadow:0 8px 30px -8px rgba(255,119,89,.7)}
+.btn-sun:hover{transform:translateY(-2px);box-shadow:0 14px 40px -10px rgba(255,119,89,.9)}
+.btn-ghost{background:rgba(255,255,255,.06);border:1px solid var(--line2);color:var(--text);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn-sm{padding:9px 16px;font-size:13px}
+
+/* ---------- HERO / 3D ---------- */
+#journey{position:relative;height:330vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:linear-gradient(180deg,#1b1d42 0%,#7d4a6e 45%,#f0986c 72%,#c9805f 100%)}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:default}
+.stage::after{content:"";position:absolute;inset:auto 0 0 0;height:28%;background:linear-gradient(180deg,transparent,rgba(12,15,30,.85));pointer-events:none}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(8,8,20,.55) 100%),linear-gradient(90deg,rgba(14,10,30,.62) 0%,rgba(14,10,30,.25) 38%,transparent 60%);transition:opacity .6s}
+.phase{position:absolute;left:clamp(16px,6vw,90px);right:16px;max-width:640px;bottom:clamp(90px,16vh,170px);opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;pointer-events:none;z-index:3}
+.phase.on{opacity:1;transform:none;pointer-events:auto}
+.phase.center{left:50%;transform:translate(-50%,24px);text-align:center;right:auto;width:min(680px,calc(100% - 32px))}
+.phase.center.on{transform:translate(-50%,0)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--stone);font-weight:700;margin-bottom:18px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+.phase.center .eyebrow::after{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.02em;line-height:1.02}
+.hero-title{font-size:clamp(44px,7.6vw,104px);text-shadow:0 4px 40px rgba(30,10,30,.45)}
+.hero-title em{font-style:italic;color:var(--sun);font-weight:400}
+.hero-sub{margin-top:20px;font-size:clamp(15px,1.5vw,18px);color:#efe2d6;max-width:540px;text-shadow:0 2px 18px rgba(20,8,20,.6)}
+.phase.center .hero-sub{margin-inline:auto}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.phase.center .hero-cta{justify-content:center}
+.scroll-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,240,228,.75);transition:opacity .5s}
+.scroll-hint i{width:1px;height:38px;background:linear-gradient(var(--stone),transparent);animation:drip 2s ease-in-out infinite;transform-origin:top}
+@keyframes drip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+.progress{position:absolute;right:clamp(14px,3vw,34px);top:50%;transform:translateY(-50%);z-index:4;display:flex;flex-direction:column;gap:18px}
+.progress span{display:flex;align-items:center;gap:10px;justify-content:flex-end;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,240,228,.45);transition:color .4s}
+.progress span::after{content:"";width:8px;height:8px;border-radius:50%;border:1px solid currentColor;transition:background .4s,transform .4s}
+.progress span.on{color:var(--text)}
+.progress span.on::after{background:var(--sun);border-color:var(--sun);transform:scale(1.3)}
+.place{position:absolute;z-index:3;pointer-events:none;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,245,235,.85);display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .5s;white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.place::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--snow);box-shadow:0 0 0 4px rgba(255,255,255,.15)}
+.place.on{opacity:1}
+#tip{position:fixed;z-index:60;pointer-events:none;min-width:200px;max-width:260px;padding:14px 16px;border-radius:14px;background:rgba(16,18,38,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,190,130,.35);box-shadow:0 20px 50px -15px rgba(0,0,0,.7);opacity:0;transform:translateY(6px) scale(.97);transition:opacity .2s,transform .2s}
+#tip.on{opacity:1;transform:none}
+#tip .t-name{font-family:var(--display);font-size:19px;line-height:1.15}
+#tip .t-meta{font-size:12px;color:var(--muted);margin-top:4px}
+#tip .t-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+#tip .t-tags span{font-size:11px;padding:3px 8px;border-radius:99px;background:rgba(255,166,94,.14);color:#ffcf9f;border:1px solid rgba(255,166,94,.25)}
+.no-webgl #scene{display:none}
+
+/* ---------- SECTIONS ---------- */
+section{position:relative}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.block{padding:clamp(80px,11vw,140px) 0}
+.menzil{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--sun);font-weight:800;margin-bottom:18px}
+.menzil small{color:var(--dim);font-weight:700;letter-spacing:.18em}
+.menzil::after{content:"";flex:0 0 60px;height:1px;background:linear-gradient(90deg,var(--sun),transparent)}
+.h2{font-size:clamp(34px,5vw,62px)}
+.h2 em{font-style:italic;color:var(--stone);font-weight:400}
+.lead{color:var(--muted);font-size:clamp(15px,1.4vw,17px);max-width:560px;margin-top:16px}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:44px}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.sample{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--dim);letter-spacing:.06em;border:1px dashed var(--line2);padding:4px 10px;border-radius:99px}
+
+/* stats */
+.stats{position:relative;z-index:2;margin-top:-1px;background:linear-gradient(180deg,rgba(12,15,30,1),var(--night))}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:38px 24px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:var(--display);font-size:clamp(38px,4.6vw,60px);font-weight:400;line-height:1;letter-spacing:-.03em}
+.stat b sup{font-size:.5em;color:var(--sun);vertical-align:top;margin-left:2px}
+.stat span{display:block;margin-top:10px;color:var(--muted);font-size:14px}
+
+/* guides */
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:28px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line2);background:transparent;border-radius:99px;padding:8px 15px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .25s}
+.chip:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.chip.on{background:var(--stone);color:#1d1424;border-color:var(--stone);font-weight:700}
+.search{margin-left:auto;display:flex;align-items:center;gap:10px;border:1px solid var(--line2);border-radius:99px;padding:9px 16px;min-width:240px;background:rgba(255,255,255,.03)}
+.search input{background:none;border:0;outline:0;width:100%;font-size:14px}
+.search svg{width:16px;height:16px;opacity:.6;flex:none}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.guide{position:relative;padding:22px;border-radius:var(--radius);background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);overflow:hidden;transition:transform .35s,border-color .35s;isolation:isolate}
+.guide::before{content:"";position:absolute;inset:auto -40% -60% auto;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,var(--glow,rgba(255,166,94,.22)),transparent 70%);z-index:-1;transition:transform .5s}
+.guide:hover{transform:translateY(-4px);border-color:rgba(255,190,130,.3)}
+.guide:hover::before{transform:scale(1.3)}
+.g-top{display:flex;gap:14px;align-items:center}
+.avatar{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-family:var(--display);font-size:20px;font-weight:600;color:#1d1424;flex:none}
+.g-name{font-family:var(--display);font-size:21px;line-height:1.1}
+.g-meta{font-size:13px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12px;font-weight:700;color:var(--river)}
+.badge svg{width:14px;height:14px}
+.langs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.langs span{font-size:12px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.g-foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.g-foot button{background:none;border:0;color:var(--sun);font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);border:1px dashed var(--line2);border-radius:var(--radius)}
+
+/* register */
+.reg{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(30px,5vw,70px);align-items:start}
+.points{margin-top:34px;display:grid;gap:18px}
+.point{display:flex;gap:14px}
+.point i{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(255,166,94,.12);color:var(--sun)}
+.point i svg{width:20px;height:20px}
+.point b{display:block;font-size:15px}
+.point span{color:var(--muted);font-size:14px}
+.form-card{position:relative;border-radius:24px;padding:clamp(22px,3vw,34px);background:linear-gradient(170deg,#1f2546,#151a33);border:1px solid var(--line2);box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.steps{display:flex;gap:8px;margin-bottom:26px}
+.steps div{flex:1}
+.steps .bar{height:4px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.steps .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sun),var(--ember));transition:width .5s}
+.steps .on .bar i{width:100%}
+.steps small{display:block;margin-top:8px;font-size:12px;color:var(--dim);font-weight:700;letter-spacing:.04em}
+.steps .on small{color:var(--text)}
+.fstep{display:none;animation:fadeUp .45s ease}
+.fstep.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.field label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.field input,.field select,.field textarea{background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;font-size:15px;outline:0;transition:border-color .2s,background .2s;width:100%}
+.field select option{background:#1b2040}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sun);background:rgba(255,166,94,.05)}
+.field.err input,.field.err select{border-color:var(--ember)}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
+.toggle small{display:block;color:var(--dim);font-size:12px}
+.sw{position:relative;flex:none;width:44px;height:26px}
+.sw input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.sw i{position:absolute;inset:0;border-radius:99px;background:rgba(255,255,255,.12);transition:background .25s}
+.sw i::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .25s}
+.sw input:checked+i{background:var(--river)}
+.sw input:checked+i::after{transform:translateX(18px)}
+.kvkk{display:flex;gap:12px;align-items:flex-start;margin-top:18px;font-size:13px;color:var(--muted);cursor:pointer}
+.kvkk input{margin-top:3px;accent-color:var(--sun);width:16px;height:16px;flex:none}
+.kvkk a{color:var(--stone);text-decoration:underline;text-underline-offset:3px}
+.kvkk.err{color:var(--ember)}
+.f-nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.lang-pick{display:flex;flex-wrap:wrap;gap:7px}
+.lang-pick .chip{padding:6px 12px;font-size:12px}
+.done{display:none;text-align:center;padding:30px 6px}
+.done.on{display:block;animation:fadeUp .6s ease}
+.check{width:84px;height:84px;margin:0 auto 22px}
+.check circle{stroke-dasharray:252;stroke-dashoffset:252;animation:draw .8s ease forwards}
+.check path{stroke-dasharray:60;stroke-dashoffset:60;animation:draw .5s .6s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.done h3{font-size:30px}
+.done p{color:var(--muted);margin-top:10px}
+.done code{display:inline-block;margin-top:18px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--line2);font-family:ui-monospace,Consolas,monospace;font-size:13px;color:var(--stone)}
+
+/* announcements */
+.ann{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:auto auto;gap:18px}
+.a-card{position:relative;border-radius:var(--radius);padding:24px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;gap:12px;transition:border-color .3s,transform .3s;overflow:hidden}
+.a-card:hover{border-color:rgba(255,190,130,.3);transform:translateY(-3px)}
+.a-card.big{grid-row:span 2;background:linear-gradient(165deg,#2b2350 0%,#5a3355 55%,#a2524c 100%);padding:30px;justify-content:flex-end;min-height:380px}
+.a-card.big h3{font-size:clamp(28px,3vw,38px)}
+.a-card.big .a-art{position:absolute;inset:0;opacity:.9}
+.a-card.big>*:not(.a-art){position:relative}
+.a-date{display:flex;align-items:baseline;gap:8px}
+.a-date b{font-family:var(--display);font-size:34px;font-weight:400;line-height:1}
+.a-date span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tag{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:99px}
+.tag.ev{background:rgba(255,166,94,.16);color:#ffc28d}
+.tag.job{background:rgba(95,214,201,.14);color:var(--river)}
+.tag.fac{background:rgba(190,170,255,.14);color:#cdbfff}
+.tag.edu{background:rgba(255,255,255,.1);color:var(--stone)}
+.a-card h3{font-size:22px;line-height:1.2}
+.a-card p{color:var(--muted);font-size:14px}
+.a-card .more{margin-top:auto;font-size:13px;font-weight:700;color:var(--sun)}
+
+/* voices */
+.voices{position:relative;border-radius:28px;padding:clamp(28px,5vw,64px);background:radial-gradient(120% 140% at 0% 0%,#2a2350,transparent 60%),radial-gradient(120% 140% at 100% 100%,#4a2a3f,transparent 55%),var(--night2);border:1px solid var(--line);overflow:hidden}
+.quote-wrap{position:relative;min-height:230px}
+.quote{position:absolute;inset:0;opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s;pointer-events:none}
+.quote.on{opacity:1;transform:none;pointer-events:auto}
+.quote blockquote{font-family:var(--display);font-size:clamp(24px,3.2vw,40px);line-height:1.22;font-weight:400;letter-spacing:-.01em;max-width:900px}
+.quote blockquote::before{content:"“";color:var(--sun);margin-right:4px}
+.quote figcaption{margin-top:22px;display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+.quote figcaption b{color:var(--text)}
+.q-dots{display:flex;gap:8px;margin-top:30px}
+.q-dots button{width:34px;height:4px;border-radius:4px;border:0;background:rgba(255,255,255,.15);cursor:pointer;transition:background .3s,width .3s}
+.q-dots button.on{background:var(--sun);width:54px}
+.v-cta{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:40px;padding-top:28px;border-top:1px solid var(--line)}
+.v-cta p{color:var(--muted)}
+
+/* panel */
+.panel{border-radius:28px;background:#0f1326;border:1px solid var(--line2);overflow:hidden;box-shadow:0 50px 100px -50px rgba(0,0,0,.9)}
+.p-bar{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line);background:#121731;flex-wrap:wrap}
+.dots{display:flex;gap:6px}
+.dots i{width:11px;height:11px;border-radius:50%;background:#3a3f5c}
+.dots i:nth-child(1){background:#ff6f61}.dots i:nth-child(2){background:#ffbd4a}.dots i:nth-child(3){background:#3ecf8e}
+.p-url{flex:1;min-width:160px;font-size:12px;color:var(--dim);background:rgba(255,255,255,.04);border-radius:8px;padding:6px 12px;font-family:ui-monospace,Consolas,monospace}
+.secure{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--river);font-weight:700}
+.secure svg{width:14px;height:14px}
+.p-body{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:20px}
+.kpi{padding:18px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.kpi span{font-size:12px;color:var(--muted)}
+.kpi b{display:block;font-family:var(--display);font-size:34px;font-weight:400;line-height:1.1;margin-top:6px}
+.kpi small{font-size:12px;color:var(--river);font-weight:700}
+.p-wide{grid-column:span 2;padding:20px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.p-wide h4{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.p-wide h4 small{color:var(--dim);font-weight:600}
+.hbar{display:grid;grid-template-columns:120px 1fr 40px;align-items:center;gap:10px;font-size:13px;margin-bottom:11px;color:var(--muted)}
+.hbar .tr{height:8px;border-radius:8px;background:rgba(255,255,255,.06);overflow:hidden}
+.hbar .tr i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--sun),var(--ember));transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+.hbar b{text-align:right;color:var(--text);font-weight:700}
+.cols{display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:10px}
+.cols div{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.cols i{display:block;width:100%;max-width:34px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--river),rgba(95,214,201,.25));height:0;transition:height 1.3s cubic-bezier(.2,.7,.2,1)}
+.cols span{font-size:11px;color:var(--dim)}
+.pending{grid-column:span 4}
+.p-row{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
+.p-row:first-of-type{border-top:0}
+.p-row .who{display:flex;align-items:center;gap:10px}
+.p-row .who i{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;color:#1d1424}
+.p-row span{color:var(--muted)}
+.ok{background:rgba(95,214,201,.14);color:var(--river);border:1px solid rgba(95,214,201,.3)}
+.ok.done-ok{background:transparent;border-color:transparent;color:var(--dim);cursor:default}
+
+/* contact + footer */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.c-card{border-radius:24px;padding:clamp(22px,3vw,32px);background:var(--card);border:1px solid var(--line)}
+footer{border-top:1px solid var(--line);padding:40px 0 50px;color:var(--dim);font-size:13px}
+.f-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.skyline{display:block;width:100%;height:auto;opacity:.5;margin-bottom:34px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);z-index:80;padding:13px 20px;border-radius:14px;background:#f5eee6;color:#1a1424;font-size:14px;font-weight:600;box-shadow:0 20px 50px -10px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:all .35s;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:980px){
+  .nav-links{display:none}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .reg,.contact{grid-template-columns:1fr}
+  .ann{grid-template-columns:1fr 1fr}
+  .a-card.big{grid-column:span 2;grid-row:auto;min-height:320px}
+  .p-body{grid-template-columns:1fr 1fr}
+  .p-wide,.pending{grid-column:span 2}
+  .progress{display:none}
+}
+@media (max-width:640px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat{padding:26px 16px}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .grid,.ann{grid-template-columns:1fr}
+  .a-card.big{grid-column:auto}
+  .row{grid-template-columns:1fr}
+  .search{margin-left:0;min-width:0;width:100%}
+  .p-body{grid-template-columns:1fr 1fr;padding:12px;gap:10px}
+  .kpi b{font-size:28px}
+  .p-row{grid-template-columns:1fr auto;gap:6px 12px}
+  .p-row span{display:none}
+  .hbar{grid-template-columns:96px 1fr 34px}
+  .brand-text{display:none}
+  .phase{bottom:56px}
+  .scroll-hint{display:none}
+  .quote-wrap{min-height:300px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#top" class="brand" aria-label="ASÜ Turizm Mezun Ağı">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <rect x="3" y="4" width="26" height="25" rx="2" stroke="#e8d2b1" stroke-width="1.6"/>
+      <path d="M10 29V17.5C10 13 13 9.5 16 7.5C19 9.5 22 13 22 17.5V29" stroke="#ffa65e" stroke-width="1.8"/>
+      <path d="M13 29v-9c0-2 1.3-3.8 3-5 1.7 1.2 3 3 3 5v9" stroke="#e8d2b1" stroke-width="1.2" opacity=".6"/>
+    </svg>
+    <span class="brand-text">ASÜ Turizm</span> <b>Mezun Ağı</b>
+  </a>
+  <div class="nav-links">
+    <a href="#rehberler">Rehberler</a>
+    <a href="#kayit">Mezun Kaydı</a>
+    <a href="#duyurular">Duyurular</a>
+    <a href="#sesler">Mezun Sesleri</a>
+    <a href="#panel">Fakülte Paneli</a>
+  </div>
+  <a href="#kayit" class="btn btn-sun btn-sm">Kayıt Ol</a>
+</nav>
+
+<!-- HERO JOURNEY -->
+<section id="journey">
+  <div class="stage" id="stage">
+    <canvas id="scene" aria-label="Hasan Dağı, Ihlara Vadisi, Selime ve Sultanhanı Kervansarayı'nı birleştiren üç boyutlu sahne"></canvas>
+    <div class="vignette"></div>
+
+    <div class="place" id="pl-hasan">Hasan Dağı · 3.268 m</div>
+    <div class="place" id="pl-ihlara">Ihlara Vadisi · Melendiz Çayı</div>
+    <div class="place" id="pl-sultanhani">Sultanhanı Kervansarayı</div>
+
+    <div class="phase on" id="ph0">
+      <div class="eyebrow">Aksaray Üniversitesi · Turizm Fakültesi</div>
+      <h1 class="hero-title">Aksaray'dan<br><em>dünyaya</em> uzanan yol.</h1>
+      <p class="hero-sub">Hasan Dağı'nın eteğinden, Ihlara'nın kıyısından, Sultanhanı'nın kapısından geçen bir yol. Mezunlarımızı kayda alan, rehberlerimizi buluşturan ve fakülteyle bağı hep canlı tutan dijital mezun ağı.</p>
+      <div class="hero-cta">
+        <a href="#kayit" class="btn btn-sun">Mezun Kaydı Oluştur</a>
+        <a href="#rehberler" class="btn btn-ghost">Rehberlerimizi Keşfet</a>
+      </div>
+    </div>
+    <div class="phase center" id="ph1">
+      <div class="eyebrow">İpek Yolu boyunca</div>
+      <h2 class="hero-title" style="font-size:clamp(40px,6.4vw,86px)">Her ışık, bir <em>mezunumuz</em>.</h2>
+      <p class="hero-sub">Yol boyunca yanan her fener, sahada çalışan bir mezunu temsil ediyor. Üzerine gel ya da dokun, kim olduğunu gör.</p>
+    </div>
+    <div class="phase center" id="ph2">
+      <div class="eyebrow">Kapıdan geçen</div>
+      <h2 class="hero-title" style="font-size:clamp(40px,6.4vw,86px)">Bağını <em>koparmaz</em>.</h2>
+      <p class="hero-sub">Kaydını oluştur; mezun buluşmalarından, iş ilanlarından ve fakülte duyurularından ilk sen haberdar ol.</p>
+      <div class="hero-cta"><a href="#kayit" class="btn btn-sun">Ağa Katıl</a><a href="#stats" class="btn btn-ghost">Devam et</a></div>
+    </div>
+
+    <div class="progress" aria-hidden="true">
+      <span class="on" data-p="0">Yol</span>
+      <span data-p="1">Fenerler</span>
+      <span data-p="2">Kapı</span>
+    </div>
+    <div class="scroll-hint" id="hint">Kaydır · yola çık<i></i></div>
+  </div>
+</section>
+<div id="tip"></div>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="wrap">
+    <div class="stats-grid reveal">
+      <div class="stat"><b data-count="1248">0</b><span>Kayıtlı mezun</span></div>
+      <div class="stat"><b data-count="316">0</b><span>Kokartlı rehber</span></div>
+      <div class="stat"><b data-count="17">0</b><span>Rehberlik dili</span></div>
+      <div class="stat"><b data-count="81" data-suffix="%">0</b><span>Sektörde istihdam</span></div>
+    </div>
+    <p style="text-align:right;margin-top:12px"><span class="sample">Tüm veriler örnektir</span></p>
+  </div>
+</section>
+
+<!-- GUIDES -->
+<section class="block" id="rehberler">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <div class="menzil">Menzil 01 <small>· Rehber Mezunlarımız</small></div>
+        <h2 class="h2">Sahada, dünyanın <em>dilini</em> konuşanlar.</h2>
+        <p class="lead">Kokartlı rehber mezunlarımızı dile ve bölgeye göre bul. Kimin listede görüneceğine ve hangi iletişim bilgisinin açılacağına mezunun kendisi karar verir.</p>
+      </div>
+    </div>
+    <div class="toolbar reveal">
+      <div class="chips" id="langChips"></div>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="İsim ya da bölge ara…" aria-label="Rehber ara">
+      </label>
+    </div>
+    <div class="grid" id="guides"></div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section class="block" id="kayit" style="padding-top:20px">
+  <div class="wrap reg">
+    <div class="reveal">
+      <div class="menzil">Menzil 02 <small>· Mezun Kaydı</small></div>
+      <h2 class="h2">Üç adım, <em>iki dakika</em>.</h2>
+      <p class="lead">Mezun olduğun gün fakülteyle bağın bitmiyor. Kaydını oluştur, kariyerini güncel tut; fakülte de seni doğru fırsatla buluştursun.</p>
+      <div class="points">
+        <div class="point"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></i><div><b>Veriler fakültede</b><span>Kayıtlar fakültenin kendi sunucusunda tutulur, üçüncü taraf bir servise gitmez.</span></div></div>
+        <div class="point"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></i><div><b>Onaylı yayın</b><span>Her kayıt yönetici onayından geçer; KVKK aydınlatma metni ve açık rıza ile.</span></div></div>
+        <div class="point"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></i><div><b>Görünürlük senin elinde</b><span>Rehber listesinde görünmek, e-posta ya da telefon paylaşmak tamamen isteğe bağlı.</span></div></div>
+      </div>
+    </div>
+
+    <div class="form-card reveal" id="formCard">
+      <div class="steps" id="steps">
+        <div class="on"><div class="bar"><i></i></div><small>1 · Kimlik</small></div>
+        <div><div class="bar"><i></i></div><small>2 · Kariyer</small></div>
+        <div><div class="bar"><i></i></div><small>3 · İletişim</small></div>
+      </div>
+      <form id="regForm" novalidate>
+        <div class="fstep on" data-step="0">
+          <div class="field"><label for="f-name">Ad Soyad</label><input id="f-name" required placeholder="Örn. Elif Kaya" autocomplete="name"></div>
+          <div class="row">
+            <div class="field"><label for="f-no">Öğrenci No</label><input id="f-no" inputmode="numeric" placeholder="Örn. 18XXXXXXX"></div>
+            <div class="field"><label for="f-year">Mezuniyet Yılı</label><select id="f-year" required><option value="">Seçin</option></select></div>
+          </div>
+          <div class="field"><label for="f-dep">Bölüm</label>
+            <select id="f-dep" required><option value="">Seçin</option><option>Turizm Rehberliği</option><option>Turizm İşletmeciliği</option><option>Gastronomi ve Mutfak Sanatları</option></select>
+          </div>
+        </div>
+        <div class="fstep" data-step="1">
+          <div class="row">
+            <div class="field"><label for="f-sector">Çalıştığın Alan</label>
+              <select id="f-sector" required><option value="">Seçin</option><option>Serbest rehber</option><option>Seyahat acentesi</option><option>Otel / konaklama</option><option>Yiyecek-içecek</option><option>Kamu</option><option>Akademi</option><option>Sektör dışı</option><option>Şu an çalışmıyorum</option></select>
+            </div>
+            <div class="field"><label for="f-city">Şehir</label><input id="f-city" placeholder="Örn. Nevşehir"></div>
+          </div>
+          <div class="field"><label for="f-org">Kurum (isteğe bağlı)</label><input id="f-org" placeholder="Örn. ABC Turizm"></div>
+          <label class="toggle"><div>Kokartlı rehberim<small>Profesyonel turist rehberi ruhsatım var</small></div><span class="sw"><input type="checkbox" id="f-kokart" checked><i></i></span></label>
+          <div class="field" style="margin-top:16px"><label>Rehberlik dillerin</label><div class="lang-pick" id="langPick"></div></div>
+        </div>
+        <div class="fstep" data-step="2">
+          <div class="row">
+            <div class="field"><label for="f-mail">E-posta</label><input id="f-mail" type="email" required placeholder="ornek@mail.com" autocomplete="email"></div>
+            <div class="field"><label for="f-tel">Telefon (isteğe bağlı)</label><input id="f-tel" type="tel" placeholder="05XX XXX XX XX" autocomplete="tel"></div>
+          </div>
+          <label class="toggle"><div>Rehber listesinde görüneyim<small>Adın, dillerin ve bölgen herkese açık listede yer alır</small></div><span class="sw"><input type="checkbox" checked><i></i></span></label>
+          <label class="toggle"><div>E-postam görünsün<small>Kapalıysa mesajlar fakülte üzerinden iletilir</small></div><span class="sw"><input type="checkbox"><i></i></span></label>
+          <label class="toggle"><div>Duyurular bana gelsin<small>Buluşmalar, iş ilanları, seminerler</small></div><span class="sw"><input type="checkbox" checked><i></i></span></label>
+          <label class="kvkk" id="kvkkLbl"><input type="checkbox" id="f-kvkk"><span><a href="#" onclick="event.preventDefault();toast('Demo: KVKK aydınlatma metni burada açılır.')">KVKK aydınlatma metnini</a> okudum; verilerimin mezun takibi amacıyla fakülte tarafından işlenmesine açık rıza veriyorum.</span></label>
+        </div>
+        <div class="f-nav">
+          <button type="button" class="btn btn-ghost" id="prev" style="visibility:hidden">Geri</button>
+          <button type="submit" class="btn btn-sun" id="next">Devam</button>
+        </div>
+      </form>
+      <div class="done" id="done">
+        <svg class="check" viewBox="0 0 84 84" fill="none"><circle cx="42" cy="42" r="40" stroke="#5fd6c9" stroke-width="3"/><path d="m27 43 10 10 21-22" stroke="#5fd6c9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Yola hoş geldin!</h3>
+        <p>Kaydın yönetici onayına gönderildi. Onaylandığında e-posta ile haber vereceğiz.</p>
+        <code id="regNo">ASU-TF-M-2026-0000</code>
+        <div style="margin-top:22px"><button class="btn btn-ghost btn-sm" id="again">Yeni kayıt (demo)</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANNOUNCEMENTS -->
+<section class="block" id="duyurular" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <div class="menzil">Menzil 03 <small>· Mezun Duyuruları</small></div>
+        <h2 class="h2">Kervandan <em>haberler</em>.</h2>
+      </div>
+      <a href="#" class="btn btn-ghost btn-sm" onclick="event.preventDefault();toast('Demo: tüm duyurular sayfası')">Tüm duyurular →</a>
+    </div>
+    <div class="ann">
+      <article class="a-card big reveal">
+        <svg class="a-art" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><radialGradient id="sunG" cx="70%" cy="38%" r="40%"><stop offset="0" stop-color="#ffd59e" stop-opacity=".95"/><stop offset="1" stop-color="#ffd59e" stop-opacity="0"/></radialGradient></defs>
+          <rect width="400" height="400" fill="url(#sunG)"/>
+          <path d="M0 250 L90 170 L130 195 L210 110 L250 140 L290 120 L400 210 V400 H0Z" fill="#3b2442" opacity=".55"/>
+          <path d="M210 110 L232 128 L222 126 L214 132 L204 124 L196 128Z" fill="#f3f0f7" opacity=".85"/>
+          <path d="M0 300 C80 270 160 290 230 275 S360 260 400 280 V400 H0Z" fill="#22172f" opacity=".75"/>
+        </svg>
+        <span class="tag ev">Etkinlik</span>
+        <div class="a-date"><b>14</b><span>Kasım 2026 · Ihlara</span></div>
+        <h3>Mezunlar Buluşması: Ihlara'da bir gün</h3>
+        <p style="color:#f0dccd">Belisırma'da kahvaltı, vadi yürüyüşü ve yeni dönem öğrencileriyle tanışma. Kontenjan sınırlı.</p>
+        <span class="more">Katılımını bildir →</span>
+      </article>
+      <article class="a-card reveal">
+        <span class="tag fac">Fakülte</span>
+        <div class="a-date"><b>20</b><span>Ekim · Teams</span></div>
+        <h3>Danışma Kurulu'nda mezun görüşleri</h3>
+        <p>Fakültemizin gelişimine dair görüş ve önerilerin kurul gündemine taşınıyor.</p>
+        <span class="more">Görüş bildir →</span>
+      </article>
+      <article class="a-card reveal">
+        <span class="tag job">İş İlanı</span>
+        <div class="a-date"><b>03</b><span>Kasım · Nevşehir</span></div>
+        <h3>Almanca rehber aranıyor (sezonluk)</h3>
+        <p>Kapadokya turları için kokartlı, en az 2 yıl deneyimli rehber.</p>
+        <span class="more">İlana bak →</span>
+      </article>
+      <article class="a-card reveal">
+        <span class="tag edu">Seminer</span>
+        <div class="a-date"><b>28</b><span>Kasım · Fakülte</span></div>
+        <h3>Sultanhanı ve Selçuklu kervan yolları</h3>
+        <p>Mezun rehberlerimiz için alan semineri ve saha uygulaması.</p>
+        <span class="more">Kayıt ol →</span>
+      </article>
+      <article class="a-card reveal">
+        <span class="tag job">Staj</span>
+        <div class="a-date"><b>10</b><span>Aralık · İstanbul</span></div>
+        <h3>Mezun şirketinden 1. sınıflara staj</h3>
+        <p>Bir mezunumuzun acentesi, yaz dönemi için iki stajyer arıyor.</p>
+        <span class="more">Başvur →</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- VOICES -->
+<section class="block" id="sesler" style="padding-top:40px">
+  <div class="wrap">
+    <div class="voices reveal">
+      <div class="menzil">Menzil 04 <small>· Mezun Sesleri</small></div>
+      <div class="quote-wrap" id="quotes"></div>
+      <div class="q-dots" id="qdots"></div>
+      <div class="v-cta">
+        <p>Sen de yeni gelen 1. sınıflara bir tavsiye bırak; bir sonraki kervan senden öğrensin.</p>
+        <button class="btn btn-sun btn-sm" onclick="toast('Demo: tavsiye formu açılır, onaydan sonra burada yayınlanır.')">Tavsiye bırak</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL -->
+<section class="block" id="panel" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <div class="menzil">Menzil 05 <small>· Fakülte Paneli</small></div>
+        <h2 class="h2">Kalite süreçleri için <em>hazır veri</em>.</h2>
+        <p class="lead">Mezun izleme, istihdam oranı, sektör dağılımı… Akreditasyon ve kalite raporlarında istenen tablolar tek tıkla Excel'e aktarılır. Kayıtları yalnızca yetkili kişiler görür.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="toast('Demo: mezunlar_2026.xlsx indirilir.')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>Excel'e aktar
+      </button>
+    </div>
+    <div class="panel reveal" id="panelBox">
+      <div class="p-bar">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="p-url">mezun.turizm.aksaray.edu.tr/yonetim</div>
+        <div class="secure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Fakülte sunucusu</div>
+      </div>
+      <div class="p-body">
+        <div class="kpi"><span>Toplam mezun kaydı</span><b>1.248</b><small>+64 bu ay</small></div>
+        <div class="kpi"><span>Onay bekleyen</span><b id="pendCount">3</b><small style="color:var(--sun)">işlem gerekli</small></div>
+        <div class="kpi"><span>İstihdam oranı</span><b>%81</b><small>+4 puan / yıl</small></div>
+        <div class="kpi"><span>Anket yanıt oranı</span><b>%63</b><small>2026 mezun anketi</small></div>
+        <div class="p-wide">
+          <h4>Sektör dağılımı <small>son 5 yıl</small></h4>
+          <div id="hbars"></div>
+        </div>
+        <div class="p-wide">
+          <h4>Yıllara göre kayıt <small>mezuniyet yılı</small></h4>
+          <div class="cols" id="cols"></div>
+        </div>
+        <div class="p-wide pending">
+          <h4>Onay bekleyen kayıtlar <small>yönetici</small></h4>
+          <div id="pend"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block" id="iletisim" style="padding-top:40px">
+  <div class="wrap contact">
+    <div class="reveal">
+      <div class="menzil">Menzil 06 <small>· İletişim</small></div>
+      <h2 class="h2">Yolun neresinde olursan ol, <em>bize yaz</em>.</h2>
+      <p class="lead">Kayıt bilgilerini güncellemek, bir mezunumuza ulaşmak ya da fakülteye öneri iletmek için mesaj bırak. Mesajlar doğrudan mezun ilişkileri sorumlusuna düşer.</p>
+    </div>
+    <form class="c-card reveal" onsubmit="event.preventDefault();this.reset();toast('Demo: mesajın fakülteye iletildi.')">
+      <div class="row">
+        <div class="field"><label for="c-n">Ad Soyad</label><input id="c-n" required></div>
+        <div class="field"><label for="c-m">E-posta</label><input id="c-m" type="email" required></div>
+      </div>
+      <div class="field"><label for="c-s">Konu</label><select id="c-s"><option>Kayıt güncelleme</option><option>Bir mezuna ulaşmak istiyorum</option><option>Fakülteye öneri</option><option>İş / staj ilanı vermek istiyorum</option></select></div>
+      <div class="field"><label for="c-t">Mesaj</label><textarea id="c-t" rows="4" required></textarea></div>
+      <button class="btn btn-sun" style="width:100%">Gönder</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <svg class="skyline" viewBox="0 0 1200 120" fill="none" aria-hidden="true">
+      <path d="M0 110 L180 70 L260 82 L380 22 L420 36 L455 30 L520 62 L600 80 L690 50 L760 64 L900 88 L1200 104" stroke="#e8d2b1" stroke-width="1.2"/>
+      <path d="M380 22 L392 32 L402 29 L410 34 L420 36" stroke="#f3f0f7" stroke-width="1.2"/>
+      <path d="M830 112 V70 H900 V112 M850 112 V92 C850 82 858 76 865 72 C872 76 880 82 880 92 V112" stroke="#ffa65e" stroke-width="1.2"/>
+      <path d="M96 112 C98 90 100 74 106 64 C112 74 114 90 116 112 M130 112 C131 96 133 86 137 80 C141 86 143 96 144 112" stroke="#e8d2b1" stroke-width="1.2" opacity=".8"/>
+      <path d="M0 116 H1200" stroke="#ffffff" stroke-opacity=".12"/>
+    </svg>
+    <div class="f-row">
+      <div><b style="color:var(--text)">ASÜ Turizm Mezun Ağı</b> · Aksaray Üniversitesi Turizm Fakültesi</div>
+      <div>Bu sayfa bir tasarım önizlemesidir; tüm isim ve sayılar örnektir. · Hazırlayan: Ömer &amp; Müge</div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* =========================================================
+   Ortak veriler
+   ========================================================= */
+const FIRST=["Elif","Mert","Zeynep","Burak","Selin","Can","Ayşe","Emre","Deniz","Ece","Kaan","Melis","Onur","Derya","Yusuf","İrem","Barış","Nazlı","Tolga","Gizem","Arda","Buse","Serkan","Pınar"];
+const LAST=["Kaya","Demir","Arslan","Yıldız","Aydın","Öztürk","Çelik","Şahin","Koç","Kurt","Aksoy","Erdem","Polat","Taş","Güneş","Bulut","Karaca","Uçar","Tekin","Sezer"];
+const LANGS=["İngilizce","Almanca","Rusça","Fransızca","İspanyolca","İtalyanca","Japonca","Çince","Korece","Arapça","Felemenkçe"];
+const PLACES=["Kapadokya","Aksaray","İstanbul","Antalya","İzmir","Muğla","Konya","Nevşehir","Ankara","Trabzon","Bursa","Roma","Berlin","Viyana"];
+const SECT=["Serbest rehber","Seyahat acentesi","Otel / konaklama","Yiyecek-içecek","Akademi","Kamu"];
+const PAL=["#ffb36e","#5fd6c9","#e8d2b1","#c9b6ff","#ff8f7a","#9fd38b","#ffd36e"];
+
+const GUIDES=[
+  {n:"Elif Kaya",y:2018,l:["İngilizce","Almanca"],b:"Kapadokya",s:"Serbest rehber"},
+  {n:"Mert Demir",y:2019,l:["Rusça","İngilizce"],b:"Antalya",s:"Seyahat acentesi"},
+  {n:"Zeynep Arslan",y:2020,l:["İspanyolca","İngilizce"],b:"İstanbul",s:"Serbest rehber"},
+  {n:"Burak Yıldız",y:2017,l:["Japonca"],b:"Kapadokya",s:"Serbest rehber"},
+  {n:"Selin Aydın",y:2021,l:["Fransızca","İngilizce"],b:"İzmir · Efes",s:"Seyahat acentesi"},
+  {n:"Can Öztürk",y:2016,l:["Almanca"],b:"Muğla",s:"Serbest rehber"},
+  {n:"Ayşe Çelik",y:2022,l:["Çince","İngilizce"],b:"İstanbul",s:"Seyahat acentesi"},
+  {n:"Emre Şahin",y:2019,l:["İtalyanca","İngilizce"],b:"Aksaray · Ihlara",s:"Serbest rehber"},
+  {n:"Deniz Koç",y:2020,l:["Arapça","İngilizce"],b:"Konya",s:"Kamu"},
+];
+
+const toastEl=document.getElementById('toast');let toastT;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('on'),2600);}
+const initials=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2);
+
+/* =========================================================
+   3D SAHNE — Hasan Dağı · Ihlara · Selime · Sultanhanı
+   ========================================================= */
+(function(){
+  const stage=document.getElementById('stage'), canvas=document.getElementById('scene');
+  if(!window.THREE){document.body.classList.add('no-webgl');return;}
+  let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});}
+  catch(e){document.body.classList.add('no-webgl');return;}
+  const isMobile=matchMedia('(max-width:700px)').matches;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,isMobile?1.5:1.75));
+  const scene=new THREE.Scene();
+  const FOGC=new THREE.Color('#c27a7c');
+  scene.fog=new THREE.FogExp2(FOGC,0.0016);
+  const camera=new THREE.PerspectiveCamera(isMobile?62:50,1,0.1,2000);
+
+  /* --- yardımcılar --- */
+  let seed=11; const rnd=()=>(seed=(seed*16807)%2147483647,(seed-1)/2147483646);
+  const R=(a,b)=>a+(b-a)*rnd();
+  function hash(x,y){const s=Math.sin(x*127.1+y*311.7)*43758.5453;return s-Math.floor(s);}
+  function vnoise(x,y){const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
+    const a=hash(xi,yi),b=hash(xi+1,yi),c=hash(xi,yi+1),d=hash(xi+1,yi+1);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v;}
+  function fbm(x,y){let s=0,a=.5,f=1;for(let i=0;i<4;i++){s+=a*vnoise(x*f,y*f);f*=2.03;a*=.5;}return s;}
+  const ss=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t);};
+  const V3=(x,y,z)=>new THREE.Vector3(x,y,z);
+  const col=c=>new THREE.Color(c);
+
+  /* --- arazi fonksiyonları --- */
+  const roadCurve=new THREE.CatmullRomCurve3([V3(0,0,140),V3(5,0,95),V3(7,0,52),V3(-3,0,14),V3(0,0,-14),V3(0,0,-30),V3(9,0,-70),V3(-6,0,-120),V3(5,0,-185),V3(-4,0,-260)]);
+  const ROAD=roadCurve.getSpacedPoints(700);
+  function roadDist(x,z){let m=1e9;for(let i=0;i<ROAD.length;i+=2){const dx=x-ROAD[i].x,dz=z-ROAD[i].z,d=dx*dx+dz*dz;if(d<m)m=d;}return Math.sqrt(m);}
+  const cx=z=>44+Math.sin(z*0.021)*12+Math.sin(z*0.052)*4;           // Ihlara kanyon ekseni
+  const hBase=(x,z)=>Math.sin(x*0.028)*2.6+Math.cos(z*0.021)*2.4+Math.sin((x-z)*0.045)*1.4;
+  function canyon(x,z){const d=Math.abs(x-cx(z));return -18*(1-ss(4.5,12,d)) + ss(10,14,d)*(1-ss(14,26,d))*2.2;}
+  function H(x,z,dist){
+    if(dist===undefined)dist=roadDist(x,z);
+    const det=(fbm(x*.055,z*.055)-.5)*7+(fbm(x*.21+9,z*.21)-.5)*1.4;
+    const hills=ss(-45,-150,x)*fbm(x*.02,z*.02)*26 + ss(80,160,x)*fbm(x*.03+4,z*.03)*20;
+    return hBase(x,z)+det*ss(4,12,dist)+hills+canyon(x,z)*ss(3,9,dist);
+  }
+
+  /* --- gökyüzü --- */
+  const sunDir=V3(.62,.05,-1).normalize();
+  const sky=new THREE.Mesh(new THREE.SphereGeometry(1200,40,24),new THREE.ShaderMaterial({
+    side:THREE.BackSide,depthWrite:false,fog:false,
+    uniforms:{top:{value:col('#141537')},mid:{value:col('#7e4670')},bot:{value:col('#c98078')},sun:{value:sunDir}},
+    vertexShader:`varying vec3 vP;void main(){vP=normalize(position);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader:`uniform vec3 top,mid,bot,sun;varying vec3 vP;
+      void main(){float h=vP.y;vec3 c=mix(mid,top,smoothstep(.04,.5,h));c=mix(bot,c,smoothstep(-.04,.16,h));
+      float s=max(dot(vP,sun),0.);c+=vec3(1.,.8,.55)*pow(s,220.)*1.2+vec3(1.,.55,.35)*pow(s,12.)*.22;
+      c+=vec3(.25,.1,.2)*(1.-smoothstep(0.,.25,abs(h-.02)))*.3;gl_FragColor=vec4(c,1.);}`
+  }));
+  scene.add(sky);
+
+  // yıldızlar
+  {const n=700,p=new Float32Array(n*3);for(let i=0;i<n;i++){const th=R(0,Math.PI*2),ph=R(.18,1.45);p[i*3]=Math.cos(th)*Math.cos(ph)*1100;p[i*3+1]=Math.sin(ph)*1100;p[i*3+2]=Math.sin(th)*Math.cos(ph)*1100;}
+   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));
+   scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:1.6,sizeAttenuation:false,transparent:true,opacity:.75,fog:false})));}
+
+  /* --- ışıklar --- */
+  scene.add(new THREE.HemisphereLight(0xffd6bd,0x2e2140,.62));
+  const sunL=new THREE.DirectionalLight(0xffa36e,1.05);sunL.position.set(120,40,-140);scene.add(sunL);
+  const fill=new THREE.DirectionalLight(0xb48cff,.35);fill.position.set(-60,30,90);scene.add(fill);
+
+  /* --- arazi --- */
+  {
+    const W=760,D=600,g=new THREE.PlaneGeometry(W,D,isMobile?170:260,isMobile?190:250);
+    g.rotateX(-Math.PI/2);g.translate(0,0,-150);
+    const p=g.attributes.position,cols=new Float32Array(p.count*3);
+    const tuffA=col('#d4b08a'),tuffB=col('#a87657'),wall=col('#a5624a'),green=col('#5d7d43'),road=col('#d9bc96'),c=new THREE.Color();
+    for(let i=0;i<p.count;i++){
+      const x=p.getX(i),z=p.getZ(i),d=roadDist(x,z),y=H(x,z,d);p.setY(i,y);
+      const n=fbm(x*.08+3,z*.08);c.copy(tuffA).lerp(tuffB,ss(.3,.75,n));
+      const cd=Math.abs(x-cx(z));
+      if(cd<12){const k=1-ss(5,12,cd);c.lerp(wall,k*.9);if(cd<5.5)c.lerp(green,.75);}
+      c.multiplyScalar(.82+ss(-6,10,y)*.25);
+      if(d<3.4)c.lerp(road,1-ss(2.2,3.4,d));
+      cols[i*3]=c.r;cols[i*3+1]=c.g;cols[i*3+2]=c.b;
+    }
+    g.setAttribute('color',new THREE.BufferAttribute(cols,3));g.computeVertexNormals();
+    scene.add(new THREE.Mesh(g,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true,roughness:1,metalness:0})));
+  }
+
+  // ufka kadar uzanan zemin (arazi kenarı görünmesin)
+  {const g=new THREE.CircleGeometry(1150,48);g.rotateX(-Math.PI/2);const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:'#8a5a4a',roughness:1}));m.position.y=-4;scene.add(m);}
+
+  /* --- Hasan Dağı (Büyük & Küçük) --- */
+  function volcano(r,h,x,z,sn){
+    const g=new THREE.ConeGeometry(r,h,72,26,true),p=g.attributes.position,cc=new Float32Array(p.count*3);
+    const snow=col('#f4f0f6'),rockA=col('#7b5f73'),rockB=col('#a07d82'),c=new THREE.Color();
+    for(let i=0;i<p.count;i++){
+      let vx=p.getX(i),vy=p.getY(i),vz=p.getZ(i);const t=(vy+h/2)/h;
+      const n=fbm(vx*.035+x,vz*.035+vy*.04+sn),k=t<1?Math.pow(1-t,.75):0;
+      const ridge=Math.abs(Math.sin(Math.atan2(vz,vx)*9+n*4))*.12*(1-t);
+      vx*=k*(1+(n-.5)*.55+ridge);vz*=k*(1+(n-.5)*.55+ridge);vy+=(n-.5)*h*.07*(1-t);
+      p.setXYZ(i,vx,vy,vz);
+      c.copy(rockA).lerp(rockB,n);if(t>.6+(n-.5)*.22+ridge*.6)c.copy(snow).multiplyScalar(.92+n*.1);
+      cc[i*3]=c.r;cc[i*3+1]=c.g;cc[i*3+2]=c.b;
+    }
+    g.setAttribute('color',new THREE.BufferAttribute(cc,3));g.computeVertexNormals();
+    const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true,roughness:.95}));
+    m.position.set(x,h/2-6,z);scene.add(m);return m;
+  }
+  const hasan=volcano(210,150,-30,-380,1);
+  volcano(130,96,80,-350,7);
+  volcano(140,34,170,-360,3);volcano(160,30,-220,-330,5);
+
+  /* --- Ihlara: Melendiz Çayı --- */
+  const riverMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{t:{value:0}},
+    vertexShader:`varying vec2 vU;varying float vD;void main(){vU=uv;vec4 mv=modelViewMatrix*vec4(position,1.);vD=-mv.z;gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform float t;varying vec2 vU;varying float vD;
+      void main(){float e=smoothstep(0.,.25,vU.x)*smoothstep(1.,.75,vU.x);
+      float f=sin(vU.y*260.-t*2.6+sin(vU.x*9.+vU.y*40.)*2.)*.5+.5;f=pow(f,6.);
+      vec3 c=mix(vec3(.18,.45,.5),vec3(.55,.95,.9),f*.8);c=mix(c,vec3(1.,.75,.6),.18);
+      float fog=exp(-pow(vD*.0016,2.));gl_FragColor=vec4(mix(vec3(.76,.48,.49),c,fog),e*(.75+f*.25));}`});
+  {
+    const pos=[],uv=[],idx=[],N=260;
+    for(let i=0;i<=N;i++){const z=130-i*(470/N),x=cx(z),y=H(x,z)+.55,w=2.2;
+      pos.push(x-w,y,z,x+w,y,z);uv.push(0,i/N,1,i/N);if(i<N){const a=i*2;idx.push(a,a+2,a+1,a+1,a+2,a+3);}}
+    const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(idx);
+    scene.add(new THREE.Mesh(g,riverMat));
+  }
+  // vadideki kavaklar
+  {
+    const n=isMobile?140:240,geo=new THREE.ConeGeometry(.9,4.2,6);geo.translate(0,2.1,0);
+    const im=new THREE.InstancedMesh(geo,new THREE.MeshStandardMaterial({flatShading:true,roughness:1}),n);
+    const m=new THREE.Matrix4(),q=new THREE.Quaternion(),s=new THREE.Vector3(),pp=new THREE.Vector3(),c=new THREE.Color();
+    for(let i=0;i<n;i++){const z=R(-300,120),x=cx(z)+R(-4.4,4.4)*(rnd()<.5?1:-1)*.9;const sc=R(.6,1.5);
+      pp.set(x,H(x,z)-.2,z);s.set(sc,sc*R(.9,1.6),sc);m.compose(pp,q,s);im.setMatrixAt(i,m);
+      im.setColorAt(i,c.set(rnd()<.6?'#58773d':'#7e9443').multiplyScalar(R(.8,1.1)));}
+    scene.add(im);
+  }
+
+  /* --- Selime kaya oluşumları (peribacaları + oyma pencereler) --- */
+  const windowMat=new THREE.MeshBasicMaterial({color:'#2e1f22'});
+  const glowWinMat=new THREE.MeshBasicMaterial({color:'#ffb067'});
+  function spire(h,r,x,z,lit){
+    const pts=[],n=16,jag=R(0,10);
+    for(let i=0;i<=n;i++){const t=i/n;let rr=r*(1-Math.pow(t,1.15))*(.9+.18*vnoise(i*.45+jag,h))+r*.1*(1-t);if(i===n)rr=r*.3;pts.push(new THREE.Vector2(Math.max(rr,.05),t*h));}
+    pts.push(new THREE.Vector2(0,h+r*.15));
+    const g=new THREE.LatheGeometry(pts,14),p=g.attributes.position,cc=new Float32Array(p.count*3),c=new THREE.Color(),lo=col('#9e7458'),hi=col('#e6caa4');
+    for(let i=0;i<p.count;i++){const vx=p.getX(i),vy=p.getY(i),vz=p.getZ(i),nn=fbm(vx*.5+x,vz*.5+vy*.3+z);
+      p.setXYZ(i,vx*(.8+nn*.45),vy,vz*(.8+nn*.45));c.copy(lo).lerp(hi,Math.pow(vy/h,.7));c.multiplyScalar(.94+Math.sin(vy*1.3+nn*3)*.03);cc[i*3]=c.r;cc[i*3+1]=c.g;cc[i*3+2]=c.b;}
+    g.setAttribute('color',new THREE.BufferAttribute(cc,3));g.computeVertexNormals();
+    const grp=new THREE.Group(),y=H(x,z)-.6;
+    grp.add(new THREE.Mesh(g,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true,roughness:1})));
+    const wn=Math.floor(R(1,4));
+    for(let k=0;k<wn;k++){const t=R(.12,.55),a=R(0,Math.PI*2),rr=r*(1-Math.pow(t,1.35))*.9+.05;
+      const w=new THREE.Mesh(new THREE.PlaneGeometry(r*.28,r*.42),lit&&k===0?glowWinMat:windowMat);
+      w.position.set(Math.cos(a)*rr,t*h,Math.sin(a)*rr);w.lookAt(Math.cos(a)*rr*3,t*h,Math.sin(a)*rr*3);grp.add(w);}
+    grp.position.set(x,y,z);grp.rotation.y=R(0,6.28);scene.add(grp);return grp;
+  }
+  const selimeAnchor=V3(-30,0,-48);
+  {
+    let placed=0,tries=0;const total=isMobile?55:85;
+    while(placed<total&&tries<2000){tries++;
+      let x,z;const mode=rnd();
+      if(mode<.4){z=R(-230,70);x=cx(z)-R(13,24);}            // kanyon kenarı
+      else if(mode<.75){x=R(-48,-14);z=R(-80,-15);}           // Selime kümesi
+      else{x=R(-110,-20);z=R(-260,90);}
+      const rd=roadDist(x,z);if(rd<(mode>=.4&&mode<.75?15:9))continue;
+      const big=mode>=.4&&mode<.75;spire(R(big?9:5,big?20:13),R(2.4,4.6),x,z,rnd()<.35);placed++;}
+    // Selime "katedrali": geniş kaya kütlesi
+    for(let i=0;i<5;i++)spire(R(18,26),R(6,8),-34+i*5.5,-52+R(-4,4),true);
+  }
+
+  /* --- Sultanhanı Kervansarayı taç kapısı --- */
+  const GATE_Z=-22, gateY=hBase(0,GATE_Z);
+  {
+    const stone=new THREE.MeshStandardMaterial({color:'#e2bd8f',flatShading:true,roughness:.9});
+    const stoneD=new THREE.MeshStandardMaterial({color:'#c99c6e',flatShading:true,roughness:.95});
+    const carve=new THREE.MeshStandardMaterial({color:'#f0d4ac',flatShading:true,roughness:.8});
+    const grp=new THREE.Group();grp.position.set(0,gateY-.3,GATE_Z);
+    const archShape=(w,h,spring)=>({w,h,spring});
+    function slab(W,Hh,a,depth,mat,z){const s=new THREE.Shape(),hw=a.w/2,k=a.spring+(a.h-a.spring)*.62;
+      s.moveTo(-W/2,0);s.lineTo(-hw,0);s.lineTo(-hw,a.spring);s.quadraticCurveTo(-hw,k,0,a.h);s.quadraticCurveTo(hw,k,hw,a.spring);s.lineTo(hw,0);
+      s.lineTo(W/2,0);s.lineTo(W/2,Hh);s.lineTo(-W/2,Hh);s.lineTo(-W/2,0);
+      const g=new THREE.ExtrudeGeometry(s,{depth,bevelEnabled:false,curveSegments:14});const m=new THREE.Mesh(g,mat);m.position.z=z;grp.add(m);return m;}
+    // taç kapı bloğu ve kademeli kemerler
+    slab(19,22,archShape(10.5,16.5,9),4.2,stone,-2.1);
+    slab(10.6,16.6,archShape(8.6,14.6,8),1.2,carve,1.4);     // iç bordür
+    slab(8.7,14.7,archShape(7,12.4,7),1.2,stoneD,-.3);        // iç kemer
+    // mukarnas izlenimi: kemer içi küçük prizmalar
+    for(let r=0;r<4;r++){const cnt=7-r;for(let i=0;i<cnt;i++){const a=(i+.5)/cnt,ang=Math.PI*(1-a),rad=3.1-r*.55;
+      const b=new THREE.Mesh(new THREE.BoxGeometry(.75,.55,.9),r%2?carve:stoneD);b.position.set(Math.cos(ang)*rad*1.05,12.0+Math.sin(ang)*rad*.95-r*.15,.2);b.rotation.z=ang-Math.PI/2;grp.add(b);}}
+    // geometrik bordür çerçeveleri
+    [[19.6,22.6,.5],[17.4,20.6,.9],[15.6,19,1.25]].forEach(([w,h,dz],i)=>{
+      const fr=new THREE.Group(),t=.35,m=i===1?carve:stone;
+      const top=new THREE.Mesh(new THREE.BoxGeometry(w,t,.4),m);top.position.y=h-t/2;fr.add(top);
+      [-1,1].forEach(sd=>{const v=new THREE.Mesh(new THREE.BoxGeometry(t,h,.4),m);v.position.set(sd*(w/2-t/2),h/2,0);fr.add(v);});
+      fr.position.z=2.1+dz*.4;grp.add(fr);});
+    // taç: üstte dişli korniş
+    for(let i=-9;i<=9;i++){const c=new THREE.Mesh(new THREE.BoxGeometry(.8,.9,1.2),stone);c.position.set(i*1.05,22.4,1.2);grp.add(c);}
+    // kervansaray duvarları, payandalar ve köşe kuleleri
+    [-1,1].forEach(sd=>{
+      const wall=new THREE.Mesh(new THREE.BoxGeometry(46,9,3),stoneD);wall.position.set(sd*(9.5+23),4.5,-1);grp.add(wall);
+      const crest=new THREE.Mesh(new THREE.BoxGeometry(46,.7,3.6),stone);crest.position.set(sd*(9.5+23),9.2,-1);grp.add(crest);
+      for(let k=1;k<=5;k++){const b=new THREE.Mesh(new THREE.CylinderGeometry(.01,1.9,9.4,3),stone);b.position.set(sd*(9.5+k*8.2),4.7,1);b.rotation.y=Math.PI/2*sd+Math.PI/6;grp.add(b);}
+      const tw=new THREE.Mesh(new THREE.CylinderGeometry(3.2,3.6,12,10),stone);tw.position.set(sd*(9.5+46),6,-1);grp.add(tw);
+      const side=new THREE.Mesh(new THREE.BoxGeometry(3,9,60),stoneD);side.position.set(sd*(9.5+46),4.5,-31);grp.add(side);
+    });
+    grp.traverse(o=>{if(o.isMesh)o.userData.gate=true;});
+    scene.add(grp);
+    const pl=new THREE.PointLight(0xffa25e,1.3,40,1.8);pl.position.set(0,gateY+6,GATE_Z+6);scene.add(pl);
+  }
+
+  /* --- glow dokusu --- */
+  function glowTex(){const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
+    const gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.18,'rgba(255,220,170,.9)');gr.addColorStop(.45,'rgba(255,150,80,.25)');gr.addColorStop(1,'rgba(255,120,60,0)');
+    g.fillStyle=gr;g.fillRect(0,0,128,128);const t=new THREE.CanvasTexture(c);return t;}
+  const GLOW=glowTex();
+
+  /* --- İpek Yolu: yol şeridi + mezun fenerleri --- */
+  const roadAt=u=>{const i=Math.min(ROAD.length-1,Math.max(0,u*(ROAD.length-1)));const a=Math.floor(i),b=Math.min(a+1,ROAD.length-1),f=i-a;return ROAD[a].clone().lerp(ROAD[b],f);};
+  let uGate=0;{let best=1e9;ROAD.forEach((p,i)=>{const d=Math.abs(p.z-GATE_Z);if(d<best){best=d;uGate=i/(ROAD.length-1);}});}
+
+  const PEOPLE=[];
+  const lanterns=[],hitTargets=[];
+  {
+    const poleGeo=new THREE.CylinderGeometry(.05,.08,2.2,5);poleGeo.translate(0,1.1,0);
+    const poleMat=new THREE.MeshStandardMaterial({color:'#3b2b2b',roughness:1});
+    const capGeo=new THREE.ConeGeometry(.2,.22,6);const capMat=new THREE.MeshStandardMaterial({color:'#2b2023'});
+    const N=isMobile?40:56;
+    for(let i=0;i<N;i++){
+      const u=.04+(i/(N-1))*.86;if(Math.abs(u-uGate)<.012)continue;
+      const p=roadAt(u),p2=roadAt(Math.min(1,u+.002));const tg=p2.sub(p).normalize();const nx=-tg.z,nz=tg.x;const sd=i%2?1:-1;
+      const x=p.x+nx*3.9*sd,z=p.z+nz*3.9*sd,y=hBase(x,z);
+      const pole=new THREE.Mesh(poleGeo,poleMat);pole.position.set(x,y,z);scene.add(pole);
+      const cap=new THREE.Mesh(capGeo,capMat);cap.position.set(x,y+2.62,z);scene.add(cap);
+      const person={n:FIRST[i%FIRST.length]+' '+LAST[(i*7)%LAST.length],y:2012+(i*5)%15,
+        l:[LANGS[i%LANGS.length],LANGS[(i*3+1)%LANGS.length]].filter((v,k,a)=>a.indexOf(v)===k),
+        b:PLACES[(i*5)%PLACES.length],s:SECT[i%SECT.length]};
+      PEOPLE.push(person);
+      const warm=i%5===0?'#9ff0e6':'#ffc788';
+      const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:GLOW,color:warm,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));
+      sp.position.set(x,y+2.25,z);sp.scale.setScalar(3.4);sp.userData={person,base:3.4,ph:R(0,6.28)};scene.add(sp);
+      lanterns.push(sp);hitTargets.push(sp);
+    }
+  }
+  // kervan akışı: kapıdan ufka doğru yürüyen ışıklar
+  const STREAM=isMobile?120:200;const sPos=new Float32Array(STREAM*3),sData=[];
+  for(let i=0;i<STREAM;i++)sData.push({o:rnd(),lat:R(-1.4,1.4),h:R(.6,1.6),sp:R(.6,1.2)});
+  const streamGeo=new THREE.BufferGeometry();streamGeo.setAttribute('position',new THREE.BufferAttribute(sPos,3));
+  scene.add(new THREE.Points(streamGeo,new THREE.PointsMaterial({map:GLOW,color:'#ffd29a',size:1.6,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending})));
+  // toz zerreleri
+  const DUST=isMobile?300:600,dPos=new Float32Array(DUST*3);
+  for(let i=0;i<DUST;i++){dPos[i*3]=R(-70,70);dPos[i*3+1]=R(1,30);dPos[i*3+2]=R(-160,110);}
+  const dustGeo=new THREE.BufferGeometry();dustGeo.setAttribute('position',new THREE.BufferAttribute(dPos,3));
+  scene.add(new THREE.Points(dustGeo,new THREE.PointsMaterial({map:GLOW,color:'#ffe2c4',size:.5,transparent:true,opacity:.55,depthWrite:false,blending:THREE.AdditiveBlending})));
+  // kapı yanı meşaleler
+  [-6.2,6.2].forEach(x=>{const s=new THREE.Sprite(new THREE.SpriteMaterial({map:GLOW,color:'#ffb066',transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));s.position.set(x,gateY+5,GATE_Z+3);s.scale.setScalar(4.5);s.userData.torch=true;scene.add(s);lanterns.push(s);});
+
+  /* --- kamera rotası (yerden yükseklik cinsinden) --- */
+  const camPath=new THREE.CatmullRomCurve3([V3(-2,22,112),V3(5,14,64),V3(2,8.5,22),V3(0,6.3,-4),V3(0,6,-24),V3(3,8,-52),V3(8,15,-92)]);
+  const lookPath=new THREE.CatmullRomCurve3([V3(0,16,-60),V3(0,9,-36),V3(0,7.5,-40),V3(0,6.5,-60),V3(2,9,-130),V3(-6,22,-300),V3(-20,40,-420)]);
+  const camPos=new THREE.Vector3(),camLook=new THREE.Vector3(),lookCur=new THREE.Vector3();
+
+  /* --- etiket konumları --- */
+  const labels=[
+    {el:document.getElementById('pl-hasan'),p:V3(-30,148,-380),show:[.05,.28]},
+    {el:document.getElementById('pl-ihlara'),p:V3(cx(-60),H(cx(-60),-60)+5,-60),show:[.05,.28]},
+    {el:document.getElementById('pl-sultanhani'),p:V3(0,gateY+25,GATE_Z),show:[.05,.28]},
+  ];
+
+  /* --- etkileşim --- */
+  const tip=document.getElementById('tip'),ray=new THREE.Raycaster(),mouse=new THREE.Vector2(-9,-9);
+  let hover=null,ptr={x:0,y:0},par={x:0,y:0},tapTimer;
+  function showTip(sp,cx_,cy_){const p=sp.userData.person;
+    tip.innerHTML=`<div class="t-name">${p.n}</div><div class="t-meta">${p.y} mezunu · ${p.s} · ${p.b}</div><div class="t-tags">${p.l.map(l=>`<span>${l}</span>`).join('')}<span>Örnek kişi</span></div>`;
+    const w=260,x=Math.min(innerWidth-w-12,cx_+16),y=Math.max(12,cy_-110);tip.style.left=x+'px';tip.style.top=y+'px';tip.classList.add('on');}
+  function pick(clientX,clientY){const r=canvas.getBoundingClientRect();mouse.set(((clientX-r.left)/r.width)*2-1,-((clientY-r.top)/r.height)*2+1);
+    ray.setFromCamera(mouse,camera);const hit=ray.intersectObjects(hitTargets,false)[0];return hit?hit.object:null;}
+  stage.addEventListener('pointermove',e=>{ptr.x=e.clientX/innerWidth-.5;ptr.y=e.clientY/innerHeight-.5;
+    if(e.pointerType!=='mouse')return;const h=pick(e.clientX,e.clientY);
+    if(h){hover=h;canvas.style.cursor='pointer';showTip(h,e.clientX,e.clientY);}else{hover=null;canvas.style.cursor='default';tip.classList.remove('on');}});
+  stage.addEventListener('pointerleave',()=>{hover=null;tip.classList.remove('on');});
+  canvas.addEventListener('click',e=>{const h=pick(e.clientX,e.clientY);if(h){hover=h;showTip(h,e.clientX,e.clientY);clearTimeout(tapTimer);tapTimer=setTimeout(()=>{tip.classList.remove('on');hover=null;},3200);}});
+
+  /* --- scroll ilerlemesi --- */
+  const journey=document.getElementById('journey'),phases=[0,1,2].map(i=>document.getElementById('ph'+i)),dots=[...document.querySelectorAll('.progress span')],hint=document.getElementById('hint');
+  let pT=0,p=0;
+  function readScroll(){const r=journey.getBoundingClientRect(),tot=journey.offsetHeight-innerHeight;pT=tot>1?Math.min(1,Math.max(0,-r.top/tot)):0;}
+  addEventListener('scroll',readScroll,{passive:true});readScroll();
+  let active=-1;
+  function setPhase(i){if(i===active)return;active=i;phases.forEach((el,k)=>el.classList.toggle('on',k===i));dots.forEach((d,k)=>d.classList.toggle('on',k===i));}
+
+  function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  addEventListener('resize',()=>{resize();readScroll();});resize();
+
+  let visible=true;new IntersectionObserver(es=>{visible=es[0].isIntersecting;}).observe(stage);
+  const clock=new THREE.Clock();const tmp=new THREE.Vector3();
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+
+  function frame(){
+    requestAnimationFrame(frame);
+    const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
+    if(!visible)return;
+    try{render(dt,t);}catch(err){if(!window.__err){window.__err=err.stack+' p='+p+' pT='+pT;console.error(window.__err);}}
+  }
+  let lastW=0,lastH=0;
+  function render(dt,t){
+    if(stage.clientWidth!==lastW||stage.clientHeight!==lastH){lastW=stage.clientWidth;lastH=stage.clientHeight;resize();readScroll();}
+    p+=(pT-p)*Math.min(1,dt*4.5);
+    const e=ease(p);
+    setPhase(p<.3?0:p<.68?1:2);hint.style.opacity=p>.04?0:1;
+
+    camPath.getPointAt(e,camPos);camPos.y+=hBase(camPos.x,camPos.z);
+    lookPath.getPointAt(e,camLook);camLook.y+=hBase(camLook.x,camLook.z);
+    const nearGate=ss(6,22,Math.abs(camPos.z-GATE_Z));
+    par.x+=(ptr.x-par.x)*dt*2.5;par.y+=(ptr.y-par.y)*dt*2.5;
+    camera.position.set(camPos.x+par.x*5*nearGate+Math.sin(t*.25)*.6*nearGate,camPos.y-par.y*2.2*nearGate+Math.sin(t*.4)*.15,camPos.z);
+    if(lookCur.lengthSq()===0)lookCur.copy(camLook);lookCur.lerp(camLook,Math.min(1,dt*6));
+    camera.lookAt(lookCur);
+
+    riverMat.uniforms.t.value=t;
+    lanterns.forEach(s=>{const d=s.userData;if(d.torch){s.scale.setScalar(4.3+Math.sin(t*13+s.position.x)*.25+Math.sin(t*7.3)*.2);return;}
+      const target=(s===hover?6:d.base)*(1+Math.sin(t*2+d.ph)*.08);s.scale.setScalar(s.scale.x+(target-s.scale.x)*Math.min(1,dt*8));});
+    for(let i=0;i<STREAM;i++){const d=sData[i];const span=.97-uGate;let u=uGate+((d.o+t*.006*d.sp)%1)*span;
+      const q=roadAt(u),q2=roadAt(Math.min(1,u+.003));const tx=q2.x-q.x,tz=q2.z-q.z,l=Math.hypot(tx,tz)||1;
+      sPos[i*3]=q.x+(-tz/l)*d.lat;sPos[i*3+2]=q.z+(tx/l)*d.lat;sPos[i*3+1]=hBase(q.x,q.z)+d.h+Math.sin(t*3+i)*.08;}
+    streamGeo.attributes.position.needsUpdate=true;
+    for(let i=0;i<DUST;i++){dPos[i*3+1]+=Math.sin(t*.5+i)*.004;dPos[i*3]+=.01;if(dPos[i*3]>70)dPos[i*3]=-70;}
+    dustGeo.attributes.position.needsUpdate=true;
+
+    // yer etiketleri
+    const W=stage.clientWidth,Hh=stage.clientHeight;
+    labels.forEach(L=>{tmp.copy(L.p).project(camera);const on=p>=L.show[0]&&p<=L.show[1]&&tmp.z<1&&Math.abs(tmp.x)<.92&&Math.abs(tmp.y)<.9;
+      L.el.classList.toggle('on',on);if(on){L.el.style.transform=`translate(${(tmp.x*.5+.5)*W}px,${(-tmp.y*.5+.5)*Hh}px) translate(-50%,-50%)`;}});
+    renderer.render(scene,camera);
+  }
+  labels.forEach(L=>{L.el.style.left='0';L.el.style.top='0';});
+  frame();
+})();
+
+/* =========================================================
+   Sayfa etkileşimleri
+   ========================================================= */
+// nav
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>innerHeight*2.6),{passive:true});
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// sayaç
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);
+  const el=e.target,to=+el.dataset.count,suf=el.dataset.suffix,st=performance.now();
+  (function tick(n){const k=Math.min(1,(n-st)/1600),v=Math.round(to*(1-Math.pow(1-k,4)));el.innerHTML=(suf?'<sup>'+suf+'</sup>':'')+v.toLocaleString('tr-TR');if(k<1)requestAnimationFrame(tick);})(st);}),{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+// rehberler
+const allLangs=[...new Set(GUIDES.flatMap(g=>g.l))];
+let curLang='Tümü';
+const chipsEl=document.getElementById('langChips'),gridEl=document.getElementById('guides'),qEl=document.getElementById('q');
+['Tümü',...allLangs].forEach(l=>{const b=document.createElement('button');b.className='chip'+(l==='Tümü'?' on':'');b.textContent=l;
+  b.onclick=()=>{curLang=l;[...chipsEl.children].forEach(c=>c.classList.toggle('on',c===b));renderGuides();};chipsEl.appendChild(b);});
+qEl.addEventListener('input',renderGuides);
+function renderGuides(){
+  const q=qEl.value.trim().toLocaleLowerCase('tr-TR');
+  const list=GUIDES.filter(g=>(curLang==='Tümü'||g.l.includes(curLang))&&(!q||(g.n+' '+g.b).toLocaleLowerCase('tr-TR').includes(q)));
+  gridEl.innerHTML=list.length?list.map((g,i)=>{const c=PAL[GUIDES.indexOf(g)%PAL.length];return `
+    <article class="guide" style="--glow:${c}33">
+      <div class="g-top"><div class="avatar" style="background:${c}">${initials(g.n)}</div>
+        <div><div class="g-name">${g.n}</div><div class="g-meta">${g.y} mezunu · ${g.b}</div></div></div>
+      <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Kokartlı profesyonel rehber</div>
+      <div class="langs">${g.l.map(l=>`<span>${l}</span>`).join('')}</div>
+      <div class="g-foot"><span>${g.s}</span><button onclick="toast('Demo: ${g.n.split(' ')[0]} izin verdiyse iletişim bilgisi açılır, yoksa mesaj fakülte üzerinden iletilir.')">İletişime geç →</button></div>
+    </article>`}).join(''):`<div class="empty">Bu filtreye uygun rehber bulunamadı.</div>`;
+}
+renderGuides();
+
+// kayıt formu
+const yearSel=document.getElementById('f-year');for(let y=2026;y>=2010;y--){const o=document.createElement('option');o.textContent=y;yearSel.appendChild(o);}
+const langPick=document.getElementById('langPick');
+LANGS.forEach((l,i)=>{const b=document.createElement('button');b.type='button';b.className='chip'+(i===0?' on':'');b.textContent=l;b.onclick=()=>b.classList.toggle('on');langPick.appendChild(b);});
+let step=0;const fsteps=[...document.querySelectorAll('.fstep')],stepEls=[...document.querySelectorAll('#steps>div')];
+const nextBtn=document.getElementById('next'),prevBtn=document.getElementById('prev'),form=document.getElementById('regForm');
+function goStep(s){step=s;fsteps.forEach((f,i)=>f.classList.toggle('on',i===s));stepEls.forEach((e,i)=>e.classList.toggle('on',i<=s));
+  prevBtn.style.visibility=s?'visible':'hidden';nextBtn.textContent=s===2?'Kaydı Gönder':'Devam';}
+function validStep(){let ok=true;fsteps[step].querySelectorAll('[required]').forEach(inp=>{const f=inp.closest('.field');const bad=!inp.value.trim()||(inp.type==='email'&&!/^\S+@\S+\.\S+$/.test(inp.value));f.classList.toggle('err',bad);if(bad)ok=false;});
+  if(step===2){const k=document.getElementById('f-kvkk').checked;document.getElementById('kvkkLbl').classList.toggle('err',!k);if(!k)ok=false;}
+  if(!ok)toast('Lütfen işaretli alanları doldur.');return ok;}
+form.addEventListener('submit',e=>{e.preventDefault();if(!validStep())return;
+  if(step<2){goStep(step+1);return;}
+  form.style.display='none';document.getElementById('steps').style.display='none';
+  document.getElementById('regNo').textContent='ASU-TF-M-2026-'+String(1249+Math.floor(Math.random()*40)).padStart(4,'0');
+  document.getElementById('done').classList.add('on');});
+prevBtn.onclick=()=>goStep(Math.max(0,step-1));
+document.getElementById('again').onclick=()=>{form.reset();form.style.display='';document.getElementById('steps').style.display='';document.getElementById('done').classList.remove('on');goStep(0);};
+
+// mezun sesleri
+const QUOTES=[
+  {q:"İlk yıl her ören yerine not defteriyle gidin. Bugün anlattığım her hikâyenin ilk satırı o defterlerde.",n:"Burak Yıldız",m:"2017 · Japonca rehber, Kapadokya"},
+  {q:"Bir dil yetmez; ikinciye birinci sınıfta başlayın. Sahada kapıyı açan o ikinci dil oluyor.",n:"Selin Aydın",m:"2021 · Fransızca rehber, Efes"},
+  {q:"Ihlara'yı yüz kez yürüdüm, hâlâ yeni bir şey görüyorum. Merakınızı kaybetmeyin, mesleğin yakıtı o.",n:"Emre Şahin",m:"2019 · İtalyanca rehber, Aksaray"},
+  {q:"Staj yerinizi sadece not için seçmeyin. İlk müşterim, stajda tanıştığım acenteden geldi.",n:"Mert Demir",m:"2019 · Rusça rehber, Antalya"},
+];
+const qWrap=document.getElementById('quotes'),qDots=document.getElementById('qdots');let qi=0,qTimer;
+QUOTES.forEach((x,i)=>{const f=document.createElement('figure');f.className='quote'+(i?'':' on');
+  f.innerHTML=`<blockquote>${x.q}</blockquote><figcaption><span class="avatar" style="width:40px;height:40px;border-radius:12px;font-size:15px;background:${PAL[i]}">${initials(x.n)}</span><span><b>${x.n}</b><br>${x.m} · 1. sınıflara tavsiye</span></figcaption>`;qWrap.appendChild(f);
+  const d=document.createElement('button');d.setAttribute('aria-label','Alıntı '+(i+1));if(!i)d.className='on';d.onclick=()=>{showQ(i);restartQ();};qDots.appendChild(d);});
+function showQ(i){qi=i;[...qWrap.children].forEach((c,k)=>c.classList.toggle('on',k===i));[...qDots.children].forEach((c,k)=>c.classList.toggle('on',k===i));}
+function restartQ(){clearInterval(qTimer);qTimer=setInterval(()=>showQ((qi+1)%QUOTES.length),6000);}restartQ();
+
+// panel
+const SECTORS=[["Serbest rehber",31],["Seyahat acentesi",24],["Otel / konaklama",18],["Yiyecek-içecek",11],["Kamu",7],["Akademi",4],["Diğer",5]];
+document.getElementById('hbars').innerHTML=SECTORS.map(([n,v])=>`<div class="hbar"><span>${n}</span><div class="tr"><i data-w="${v*3}"></i></div><b>%${v}</b></div>`).join('');
+const YEARS=[[2019,82],[2020,96],[2021,104],[2022,121],[2023,138],[2024,152],[2025,171],[2026,64]];
+document.getElementById('cols').innerHTML=YEARS.map(([y,v])=>`<div><i data-h="${v/171*100}" title="${v}"></i><span>${String(y).slice(2)}</span></div>`).join('');
+const PEND=[{n:"Kaan Polat",d:"Turizm Rehberliği · 2026",s:"Serbest rehber"},{n:"Buse Taş",d:"Gastronomi · 2025",s:"Otel / konaklama"},{n:"Onur Erdem",d:"Turizm İşletmeciliği · 2024",s:"Seyahat acentesi"}];
+let pendLeft=PEND.length;
+document.getElementById('pend').innerHTML=PEND.map((x,i)=>`<div class="p-row"><div class="who"><i style="background:${PAL[i+3]}">${initials(x.n)}</i><b>${x.n}</b></div><span>${x.d}</span><span>${x.s}</span><button class="btn btn-sm ok">Onayla</button></div>`).join('');
+document.querySelectorAll('#pend .ok').forEach(b=>b.onclick=()=>{if(b.classList.contains('done-ok'))return;b.classList.add('done-ok');b.textContent='✓ Onaylandı';pendLeft--;document.getElementById('pendCount').textContent=pendLeft;toast('Kayıt onaylandı ve rehber listesine eklendi (demo).');});
+const pio=new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;pio.disconnect();
+  document.querySelectorAll('.hbar i').forEach(i=>i.style.width=i.dataset.w+'%');document.querySelectorAll('.cols i').forEach(i=>i.style.height=i.dataset.h+'%');},{threshold:.3});
+pio.observe(document.getElementById('panelBox'));
+</script>
+</body>
+</html>
